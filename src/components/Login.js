@@ -20,15 +20,20 @@ function Login({ onLogin }) {
     }
   };
 
+  // Función para manejar el clic en "Volver al Inicio"
+  const handleBackToWelcome = () => {
+    navigate('/'); // Redirige a la página de bienvenida
+  };
+
   return (
     <div
       style={{
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        height: '100vh', // Hace que ocupe toda la altura de la pantalla
+        height: '100vh', 
         textAlign: 'center',
-        backgroundColor: '#f4f4f9', // Fondo sutil para la página
+        backgroundColor: '#f4f4f9', 
       }}
     >
       <form
@@ -39,10 +44,10 @@ function Login({ onLogin }) {
           alignItems: 'center',
           padding: '20px',
           borderRadius: '8px',
-          boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', // Sombra para darle un efecto elevado
+          boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
           backgroundColor: '#fff',
-          width: '300px', // Ajusta el tamaño del formulario
-          marginTop: '-400px', // Esto mueve el formulario un poco más arriba
+          width: '300px',
+          marginTop: '-250px',
         }}
       >
         <h1>Inicio de Sesión</h1>
@@ -81,9 +86,24 @@ function Login({ onLogin }) {
             backgroundColor: '#4CAF50',
             color: '#fff',
             cursor: 'pointer',
+            marginBottom: '10px', // Espacio entre los botones
           }}
         >
           Ingresar
+        </button>
+        <button
+          type="button"
+          onClick={handleBackToWelcome}
+          style={{
+            padding: '10px 20px',
+            borderRadius: '4px',
+            border: 'none',
+            backgroundColor: '#007BFF',
+            color: '#fff',
+            cursor: 'pointer',
+          }}
+        >
+          Volver al Inicio
         </button>
         {error && <p style={{ color: 'red', marginTop: '10px' }}>{error}</p>}
       </form>

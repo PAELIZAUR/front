@@ -106,22 +106,52 @@ form button {
 
 /* Estilo de la página de composición de mensaje */
 .compose-message {
-  max-width: 600px;
+  max-width: 600px; /* Mantiene el ancho máximo del contenedor */
   margin: 0 auto;
   background-color: white;
-  padding: 20px;
+  padding: 15px; /* Se ajusta el padding */
   border-radius: 8px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .compose-message input, .compose-message textarea {
   width: 100%;
-  padding: 10px;
-  margin-bottom: 10px;
+  padding: 8px; /* Reduce el padding interno */
+  margin-bottom: 12px; /* Reduce el margen inferior */
   border-radius: 4px;
   border: 1px solid #ccc;
 }
 
 .compose-message button {
   width: 100%;
+  padding: 10px; /* Mantiene un tamaño cómodo para el botón */
+  background-color: #1a73e8;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.compose-message button:hover {
+  background-color: #1769aa;
+}
+
+/* Botón para regresar */
+.compose-message button.return-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 5px 15px;
+  background-color: #34a853;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+  width: auto;
+}
+
+.compose-message button.return-button:hover {
+  background-color: #2c9c4f;
 }

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function ComposeMessage() {
   const [from, setFrom] = useState('');
@@ -8,26 +9,26 @@ function ComposeMessage() {
   const [attachments, setAttachments] = useState([]);
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
+  const navigate = useNavigate();
 
   const handleSendMessage = async (e) => {
     e.preventDefault();
 
-    const token = localStorage.getItem('token'); // Obtener el token del localStorage
-    const systemId = 'my-system-id'; // ID del sistema (debes reemplazarlo por el adecuado)
+    const token = localStorage.getItem('token');
+    const systemId = 'my-system-id';
 
-    // Convertir los destinatarios en una lista si hay varios
     const toList = to.split(',').map(item => item.trim());
 
     const emailData = {
       token,
       systemId,
-      from,  // El remitente es el valor del input 'from'
-      to: toList,  // Lista de destinatarios
-      subject,  // Asunto
-      body,  // Cuerpo del mensaje
+      from,
+      to: toList,
+      subject,
+      body,
       attachments: attachments.map(file => ({
         filename: file.name,
-        url: URL.createObjectURL(file),  // Si solo estás enviando archivos locales, puedes generar una URL temporal
+        url: URL.createObjectURL(file),
       })),
     };
 
@@ -56,63 +57,89 @@ function ComposeMessage() {
     }
   };
 
+  const handleBackToInbox = () => {
+    navigate('/inbox');
+  };
+
   return (
     <div className="compose-message">
-      <h1>Redactar Mensaje</h1>
-      <form onSubmit={handleSendMessage}>
-        <label>
-          De:
-          <input
-            type="email"
-            placeholder="Tu correo"
-            value={from}
-            onChange={(e) => setFrom(e.target.value)}
-            required
-          />
-        </label>
-        <br />
-        <label>
-          Para:
-          <input
-            type="email"
-            placeholder="Destinatarios"
-            value={to}
-            onChange={(e) => setTo(e.target.value)}
-            required
-          />
-        </label>
-        <br />
-        <label>
-          Asunto:
-          <input
-            type="text"
-            placeholder="Asunto del correo"
-            value={subject}
-            onChange={(e) => setSubject(e.target.value)}
-          />
-        </label>
-        <br />
-        <label>
-          Cuerpo del mensaje:
-          <textarea
-            placeholder="Escribe tu mensaje..."
-            rows="10"
-            value={body}
-            onChange={(e) => setBody(e.target.value)}
-          ></textarea>
-        </label>
-        <br />
-        <label>
-          Adjuntar Archivos:
-          <input
-            type="file"
-            onChange={(e) => setAttachments([...attachments, ...e.target.files])}
-            multiple
-          />
-        </label>
-        <br />
-        <button type="submit">Enviar</button>
-      </form>
+      {/* Botón para regresar a la bandeja de entrada */}
+      <button
+        onClick={handleBackToInbox}
+        style={{
+          position: 'absolute',
+          top: '10px',
+          right: '10px',
+          padding: '5px 15px',
+          backgroundColor: '#007BFF',
+          color: '#fff',
+          border: 'none',
+          borderRadius: '4px',
+          cursor: 'pointer',
+          fontSize: '12px',
+          width: 'auto',
+        }}
+      >
+        Regresar
+      </button>
+
+      <div className="message-form-container">
+        <h1>Redactar Mensaje</h1>
+        <form onSubmit={handleSendMessage}>
+          <label>
+            De:
+            <input
+              type="email"
+              placeholder="Tu correo"
+              value={from}
+              onChange={(e) => setFrom(e.target.value)}
+              required
+            />
+          </label>
+          <br />
+          <label>
+            Para:
+            <input
+              type="email"
+              placeholder="Destinatarios"
+              value={to}
+              onChange={(e) => setTo(e.target.value)}
+              required
+            />
+          </label>
+          <br />
+          <label>
+            Asunto:
+            <input
+              type="text"
+              placeholder="Asunto del correo"
+              value={subject}
+              onChange={(e) => setSubject(e.target.value)}
+            />
+          </label>
+          <br />
+          <label>
+            Cuerpo del mensaje:
+            <textarea
+              placeholder="Escribe tu mensaje..."
+              rows="8"
+              value={body}
+              onChange={(e) => setBody(e.target.value)}
+            ></textarea>
+          </label>
+          <br />
+          <label>
+            Adjuntar Archivos:
+            <input
+              type="file"
+              onChange={(e) => setAttachments([...attachments, ...e.target.files])}
+              multiple
+            />
+          </label>
+          <br />
+          <button type="submit">Enviar</button>
+        </form>
+      </div>
 
       {error && <p style={{ color: 'red' }}>{error}</p>}
       {message && <p style={{ color: 'green' }}>{message}</p>}
